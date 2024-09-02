@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
+* {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 400;
+}
+
+#mainContainer {
+  background-color: #478894;
+}
+
+body {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 400;
+  margin: 0; 
+  display: flex;
+  justify-content: center; 
+  height: 100vh; 
+  color: white;
+}
+
+#signUp {
+  text-align: center; 
+  margin: 0; 
+}
+
+#loginBtn { 
+  margin-left:73rem;
+}
+
+#reg-container { 
+  align-items: center;
+  justify-content: center;
+  width:25rem;
+  height: 22rem;
+  margin-left: 35rem;
+  margin-top: 5rem;
+  background-color: white;
+  border-radius: 10px;
+}
+
+#inputEmail {
+  width: 23rem;
+  padding: 5px;
+}
+
+#createPass {
+  width: 23rem;
+  padding: 5px;
+}
+
+#userName {
+  width: 23rem;
+  padding: 5px;
+}
+
+
+#submit {
+  border-radius: 15px;
+}
+
+
