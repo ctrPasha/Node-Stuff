@@ -33,7 +33,7 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', userSchema);
 
-const Pasha = new User({userName: 'Pashkita12', email: "pashes12@gmail.com", password: 'Pashkita12'});
+const Pasha = new User({userName: 'ctrl', email: "test@gmail.com", password: '123'});
 
 app.use(express.static(path.join(__dirname, 'public')));
 
