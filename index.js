@@ -3,6 +3,38 @@ const path = require("path");
 const app = express();
 const mongoose = require('mongoose');
 
+main().catch(err => console.log(err));
+
+async function main() {
+  await mongoose.connect('mongodb://127.0.0.1:27017/userInformation');
+  console.log("Connection Established");
+}
+
+
+const userSchema = new mongoose.Schema({
+  userName: {
+    type: String, 
+    required: true, 
+    unique: true, 
+    minLength: 5,
+    maxLength: 15,
+    match: /^[a-zA-Z0-9]*$/ 
+  },
+  email: { 
+    type: String, 
+    required: true, 
+    unique: true 
+  },
+  password: {
+    type: String, 
+    required: true 
+  }
+});
+
+const User = mongoose.model('User', userSchema);
+
+const Pasha = new User({userName: 'Pashkita12', email: "pashes12@gmail.com", password: 'Pashkita12'});
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(express.urlencoded({ extended: true }));
