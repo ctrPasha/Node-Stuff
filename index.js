@@ -2,6 +2,9 @@ const express = require("express");
 const path = require("path");
 const app = express();
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+
+const User = require('./models/userData');
 
 main().catch(err => console.log(err));
 
@@ -9,31 +12,6 @@ async function main() {
   await mongoose.connect('mongodb://127.0.0.1:27017/userInformation');
   console.log("Connection Established");
 }
-
-
-const userSchema = new mongoose.Schema({
-  userName: {
-    type: String, 
-    required: true, 
-    unique: true, 
-    minLength: 5,
-    maxLength: 15,
-    match: /^[a-zA-Z0-9]*$/ 
-  },
-  email: { 
-    type: String, 
-    required: true, 
-    unique: true 
-  },
-  password: {
-    type: String, 
-    required: true 
-  }
-});
-
-const User = mongoose.model('User', userSchema);
-
-const Pasha = new User({userName: 'ctrl', email: "test@gmail.com", password: '123'});
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -64,12 +42,18 @@ app.post('/login', (req, res) => {
   res.send("Post Resposne");
 });
 
-app.post('/register', (req, res) => {
+app.post('/register', async (req, res) => {
   const { userName, email, password} = req.body;
 
-  //res.send(`User: ${userName} Email: ${email} Password: ${password}`);
+  try {
+  const hash = await bcrypt.hash(password, 13);
+  const newUser = new User({userName, email, password: hash});
+  await newUser.save();
 
   res.redirect('/login');
+  } catch (e) {
+    console.log(e);
+  }
 });
 
 app.listen(3000, () => {});
