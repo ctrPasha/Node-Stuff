@@ -68,3 +68,10 @@ body {
   color: lightcyan;
 }
 
+.alert-container {
+  position: absolute;
+  top: 18%; 
+  left: 39%; 
+  width: 20rem;
+  margin: 15px;
+}

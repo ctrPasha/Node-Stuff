@@ -59,4 +59,13 @@ body {
   border-radius: 15px;
 }
 
+.alert-container {
+  position: fixed;
+  top: 17%; 
+  left: 38%; 
+  width: 22rem;
+  margin: 15px;
+}
+
+
 
