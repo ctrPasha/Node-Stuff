@@ -52,8 +52,8 @@ app.get("/register", (req, res) => {
 });
 
 app.post("/logout", (req, res) => {
-  req.session.user = null;
-  
+  //req.session.user = null;
+  req.session.destroy();
   res.redirect('/login');
 });
 
