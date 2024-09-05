@@ -19,18 +19,23 @@
     
     <nav class="navbar navbar-light bg-dark mt-4">
       <div class="d-flex">
-        <% if (isSignedIn) { %>
+        <% if (user) { %>
           <a class="btn rounded-pill btn-primary mx-2" id="homeBtn" href="/">
             <i class="bi bi-house"></i> Home
           </a>
-          <a class="btn rounded-pill btn-primary mx-2" id="accountBtn" href="/account">
+          <form action="/logout" method="POST">
+            <button type="submit" class="btn rounded-pill btn-primary" id="logoutBtn">
+              <i class="bi bi-box-arrow-right"></i> Logout
+            </button>
+        </form>
+          <a class="btn rounded-pill btn-primary mx-4" id="accountBtn" href="/account">
             <i class="bi bi-person"></i> Account
           </a>
-          <a class="btn rounded-pill btn-primary mx-2" id="logoutBtn" href="/logout">
-            <i class="bi bi-box-arrow-right"></i> Logout
-          </a>
         <% } else { %>
-          <a class="btn rounded-pill btn-primary mx-2" id="loginBtn" href="/login">
+          <a class="btn rounded-pill btn-primary mx-2" id="homeBtn" href="/">
+            <i class="bi bi-house"></i> Home
+          </a>
+          <a class="btn rounded-pill btn-primary" id="loginBtn" href="/login">
             <i class="bi bi-box-arrow-in-right"></i> Login
           </a>
           <a class="btn rounded-pill btn-primary mx-4" id="signUp" href="/register">
