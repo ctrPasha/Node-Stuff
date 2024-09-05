@@ -20,7 +20,7 @@
     <nav class="navbar navbar-light bg-dark mt-4">
       <div class="d-flex">
         <% if (user) { %>
-          <a class="btn rounded-pill btn-primary mx-2" id="homeBtn" href="/">
+          <a class="btn rounded-pill btn-primary mx-2" id="homeBtn" href="http://localhost:3000/">
             <i class="bi bi-house"></i> Home
           </a>
           <form action="/logout" method="POST">
@@ -28,7 +28,7 @@
               <i class="bi bi-box-arrow-right"></i> Logout
             </button>
         </form>
-          <a class="btn rounded-pill btn-primary mx-4" id="accountBtn" href="/account">
+          <a class="btn rounded-pill btn-primary mx-4" id="accountBtn" href="http://localhost:3000/account">
             <i class="bi bi-person"></i> Account
           </a>
       </div>
@@ -37,12 +37,7 @@
     <div class="container" id="randText">
       <% if (user) { %>
         <h2>Welcome to the home page, <%= user.userName %>!</h2>
-      <% } else { %>
-        <h2>Welcome to the home page!</h2>
-      <% } %>
-      <p>Lorem Ipsum</p>
     </div>
-
   </div>
   </body>
 

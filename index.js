@@ -51,6 +51,11 @@ app.get("/register", (req, res) => {
   res.render("signup", { alert });
 });
 
+app.get('/account', (req, res) => {
+  res.render('account');
+});
+
+// Logout Request
 app.post("/logout", (req, res) => {
   //req.session.user = null;
   req.session.destroy();
