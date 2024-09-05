@@ -52,6 +52,9 @@ app.get("/register", (req, res) => {
 });
 
 app.get('/account', (req, res) => {
+  if (!req.session.user) {
+    return res.redirect("/login");
+  }
   res.render('account');
 });
 
