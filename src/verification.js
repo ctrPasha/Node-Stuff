@@ -1,4 +1,6 @@
-let isSignedIn = false;
+//let isSignedIn = false;
+
+const User = require("../models/userData");
 
 app.post("/login", async (req, res) => {
   try {

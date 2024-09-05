@@ -3,8 +3,9 @@ const path = require("path");
 const app = express();
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const session = require('express-session');
 
-const User = require("./models/userData");
+
 
 main().catch((err) => console.log(err));
 
@@ -18,6 +19,13 @@ app.use(express.static(path.join(__dirname, "src")));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.set("view engine", "ejs");
+
+app.use(session({
+  secret: 'session-secret-id',
+  saveUninitialized: false,
+  resave: false,
+  cookie: { secure: true}
+}));
 
 app.get("/", (req, res) => {
   res.render("home");
