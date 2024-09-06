@@ -97,7 +97,7 @@ app.put('/account', async(req, res) => {
     // to the specific userID
     await User.findByIdAndUpdate(user._id, updateInformation, {new: true});
 
-    //  Updating session data for templating
+    // Updating session data for templating
     req.session.user = await User.findById(user._id);
 
     res.redirect("/account?alert=success");
