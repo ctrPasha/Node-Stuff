@@ -4,6 +4,7 @@ const app = express();
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
+const methodOverride = require('method-override');
 const User = require("./models/userData");
 
 main().catch((err) => console.log(err));
@@ -13,10 +14,12 @@ async function main() {
   console.log("Connection Established");
 }
 
+// Middleware
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.static(path.join(__dirname, "src")));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(methodOverride('_method'));
 app.set("view engine", "ejs");
 
 app.use(
@@ -28,7 +31,7 @@ app.use(
   })
 );
 
-// To be able to use templates 
+// To be able to display the username for the current session 
 app.use((req, res, next) => {
   res.locals.user = req.session.user;
   next();
@@ -50,12 +53,14 @@ app.get("/register", (req, res) => {
   const alert = req.query.alert;
   res.render("signup", { alert });
 });
-
+// Account Page
 app.get('/account', (req, res) => {
+  const alert = req.query.alert;
   if (!req.session.user) {
     return res.redirect("/login");
   }
-  res.render('account');
+
+  res.render('account', { alert });
 });
 
 // Logout Request
@@ -65,7 +70,40 @@ app.post("/logout", (req, res) => {
   res.redirect('/login');
 });
 
-// Registration Authentication
+app.put('/account', async(req, res) => {
+  try {
+    const { userName, password } = req.body;
+    const existingName = await User.findOne({ userName });
+    const user = req.session.user;
+
+    if (existingName) {
+      return res.redirect('/account?alert=exists');
+    }
+
+    const updateInformation = {};
+
+    if (userName) {
+      updateInformation.userName = userName;
+    }
+
+    if (password) {
+      const newHash = await bcrypt.hash(password, 13);
+      updateInformation.password = newHash;
+    }
+
+    await User.findByIdAndUpdate(user._id, updateInformation, {new: true});
+
+    req.session.user = await User.findById(user._id);
+
+    res.redirect("/account?alert=success");
+
+  } catch (e) {
+    console.log(e);
+    res.redirect("/account?alert=error");
+  }
+});
+
+// Registration + Authentication
 app.post("/register", async (req, res) => {
   try {
     const { userName, email, password } = req.body;
@@ -110,7 +148,7 @@ app.post("/login", async (req, res) => {
   }
 });
 
-//For Unknown Paths
+// For Unknown Paths
 app.get("*", (req, res) => {
   res.send("Unknown Path");
 });
