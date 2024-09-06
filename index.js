@@ -82,17 +82,22 @@ app.put('/account', async(req, res) => {
 
     const updateInformation = {};
 
+    // Will only change the Username if thats what's being changed 
     if (userName) {
       updateInformation.userName = userName;
     }
 
+    // Will only change the Password if thats what's being changed 
     if (password) {
       const newHash = await bcrypt.hash(password, 13);
       updateInformation.password = newHash;
     }
 
+    // Retrieves the userid from the database, then updates and saves the new information 
+    // to the specific userID
     await User.findByIdAndUpdate(user._id, updateInformation, {new: true});
 
+    //  Updating session data for templating
     req.session.user = await User.findById(user._id);
 
     res.redirect("/account?alert=success");
